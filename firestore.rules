@@ -1,0 +1,48 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    match /streaks/{syncId} {
+      allow read: if isValidId(syncId);
+      allow create: if isValidId(syncId)
+        && request.resource.data.syncId == syncId
+        && request.resource.data.startDate is string
+        && request.resource.data.longestStreak is int
+        && request.resource.data.currentStreak is int
+        && request.resource.data.completedDates is list;
+      allow update: if isValidId(syncId)
+        && request.resource.data.syncId == syncId
+        && request.resource.data.startDate is string
+        && request.resource.data.longestStreak is int
+        && request.resource.data.currentStreak is int
+        && request.resource.data.completedDates is list;
+      allow delete: if false;
+    }
+
+    match /finance_ledgers/{syncId} {
+      allow read: if isValidId(syncId);
+      allow create: if isValidId(syncId)
+        && request.resource.data.syncId == syncId;
+      allow update: if isValidId(syncId)
+        && request.resource.data.syncId == syncId;
+      allow delete: if false;
+    }
+
+    match /finance_ledgers_v2/{syncId} {
+      allow read: if isValidId(syncId);
+      allow create: if isValidId(syncId)
+        && request.resource.data.syncId == syncId;
+      allow update: if isValidId(syncId)
+        && request.resource.data.syncId == syncId;
+      allow delete: if false;
+    }
+  }
+}

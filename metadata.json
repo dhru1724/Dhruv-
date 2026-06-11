@@ -1,0 +1,6 @@
+{
+  "name": "Life Dashboard",
+  "description": "An elegant, customizable Notion-style Life Dashboard to manage projects, tasks, weekly schedules, habits, and self-reflections with full support for light and dark modes.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,57 @@
+{
+  "entities": {
+    "Streak": {
+      "title": "Streak",
+      "description": "User productivity streak tracking data starting from today",
+      "type": "object",
+      "properties": {
+        "syncId": { "type": "string" },
+        "startDate": { "type": "string" },
+        "longestStreak": { "type": "integer" },
+        "currentStreak": { "type": "integer" },
+        "completedDates": {
+          "type": "array"
+        }
+      },
+      "required": ["syncId", "startDate", "longestStreak", "completedDates"]
+    },
+    "FinanceLedger": {
+      "title": "FinanceLedger",
+      "description": "User income, expense transactions ledger, budgets and retrospect notes with cloud device sync",
+      "type": "object",
+      "properties": {
+        "syncId": { "type": "string" },
+        "transactions": { "type": "array" },
+        "dailyNotes": { "type": "object" },
+        "monthlyBudgets": { "type": "object" }
+      },
+      "required": ["syncId", "transactions"]
+    },
+    "FinanceLedgerV2": {
+      "title": "FinanceLedgerV2",
+      "description": "User income, expense transactions ledger, daily limit, and monthly budgets with cloud device sync",
+      "type": "object",
+      "properties": {
+        "syncId": { "type": "string" },
+        "transactions": { "type": "array" },
+        "dailyLimit": { "type": "number" },
+        "monthlyBudgets": { "type": "object" }
+      },
+      "required": ["syncId", "transactions"]
+    }
+  },
+  "firestore": {
+    "/streaks/{syncId}": {
+      "schema": "Streak",
+      "description": "Saves user task streaks with real-time multi-device synchronization"
+    },
+    "/finance_ledgers/{syncId}": {
+      "schema": "FinanceLedger",
+      "description": "Saves user income, expenses, budgets and daily notes synced automatically across devices by syncId"
+    },
+    "/finance_ledgers_v2/{syncId}": {
+      "schema": "FinanceLedgerV2",
+      "description": "Saves user income, expenses, daily limits, and monthly budgets synced automatically across devices by syncId"
+    }
+  }
+}

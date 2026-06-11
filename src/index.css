@@ -1,0 +1,545 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-card-bg: var(--card-bg);
+  --color-card-hover: var(--card-hover);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border-color: var(--border-color);
+  --color-accent-color: var(--accent-color);
+}
+
+html, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6,
+.font-sans, .font-display, .font-mono, .font-mono * {
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif !important;
+}
+
+/* Custom premium styles inspired by Notion/Arc/Linear/Apple */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dark .glass {
+  background: rgba(20, 20, 20, 0.45);
+  backdrop-filter: blur(16px) saturate(190%);
+  -webkit-backdrop-filter: blur(16px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+/* Cosmic animating background overlay */
+@keyframes ambient-glow {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.15); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.cosmic-blob-1 {
+  animation: ambient-glow 25s infinite alternate;
+}
+
+.cosmic-blob-2 {
+  animation: ambient-glow 30s infinite alternate-reverse;
+}
+
+/* Custom scrollbar to keep layout clean */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Highlight matching focus */
+@keyframes high-ping {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.15); opacity: 0; }
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  border-radius: 9999px;
+  background-color: #3b82f6;
+  width: 12px;
+  height: 12px;
+}
+
+/* ==========================================================================
+   PERSISTENT COHESIVE THEME CONTROL SYSTEM
+   ========================================================================== */
+
+:root {
+  --bg-primary: #F8F8FA;
+  --bg-secondary: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --card-hover: #F3F4F6;
+  --text-primary: #000000;
+  --text-secondary: #222222;
+  --border-color: #E5E7EB;
+  --accent-color: #7C5CFF;
+
+  /* Mobile bottom navigation variables */
+  --bottom-nav-bg: #FFFFFF;
+  --bottom-nav-border: #E5E7EB;
+  --bottom-nav-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --bottom-nav-active: #6D5FFC;
+  --bottom-nav-inactive: #9CA3AF;
+  --bottom-nav-radius: 1rem;
+  --bottom-nav-left: 1rem;
+  --bottom-nav-right: 1rem;
+  --bottom-nav-bottom: 1rem;
+  --bottom-nav-border-width: 1px;
+}
+
+.dark {
+  --bg-primary: #0F1115;
+  --bg-secondary: #1A1D23;
+  --card-bg: #161922;
+  --card-hover: #1E222D;
+  --text-primary: #F3F4F6;
+  --text-secondary: #A0A3AF;
+  --border-color: #2B2F36;
+  --accent-color: #7C5CFF;
+
+  /* Custom navigation variables for Dark Mode */
+  --bottom-nav-bg: #050505;
+  --bottom-nav-border: #1A1A1A;
+  --bottom-nav-shadow: 0 -8px 30px rgba(0,0,0,0.9);
+  --bottom-nav-active: #6D5FFC;
+  --bottom-nav-inactive: #FFFFFF;
+  --bottom-nav-radius: 0px;
+  --bottom-nav-left: 0px;
+  --bottom-nav-right: 0px;
+  --bottom-nav-bottom: 0px;
+  --bottom-nav-border-width: 1px 0px 0px 0px;
+}
+
+.mobile-bottom-nav-bar {
+  background-color: var(--bottom-nav-bg) !important;
+  border-color: var(--bottom-nav-border) !important;
+  border-style: solid !important;
+  border-width: var(--bottom-nav-border-width) !important;
+  box-shadow: var(--bottom-nav-shadow) !important;
+  border-radius: var(--bottom-nav-radius) !important;
+  left: var(--bottom-nav-left) !important;
+  right: var(--bottom-nav-right) !important;
+  bottom: var(--bottom-nav-bottom) !important;
+}
+
+/* Base application colors mapping */
+html, body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Smooth visual transitions for theme variables */
+html, body, button, select, p, span, h1, h2, h3, h4, h5, h6, input, textarea, div.glass, .mobile-bottom-nav-bar, #theme-toggle-btn, .text-zinc-500, .text-gray-600, .dark, :root {
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease !important;
+}
+
+/* --------------------------------------------------------------------------
+   THEMATIC BACKGROUND AND CARD OVERRIDES
+   -------------------------------------------------------------------------- */
+
+/* Outer screen and backgrounds */
+.min-h-screen,
+#workspace-loading-fallback,
+.bg-black,
+.bg-\[\#000000\],
+.bg-\[\#050505\],
+.bg-\[\#0F1115\],
+.bg-[#000000],
+.bg-[#050505],
+.bg-[#0F1115] {
+  background-color: var(--bg-primary) !important;
+}
+
+/* Sidebar panels, navigation containers, drawer body, bottom navigation */
+.bg-zinc-950,
+.bg-zinc-950\/20,
+.bg-[#111111]\/45,
+.bg-zinc-900\/20,
+.bg-\[\#111111\]\/45,
+.bg-white\/70,
+.bg-neutral-900\/70,
+.fixed.bottom-0,
+[class*="bg-zinc-950"],
+[class*="bg-[#050505]"],
+[class*="bg-zinc-900/20"],
+[class*="bg-[#111111]/45"] {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* Cards, inner containers, widgets, overlays, dropdown menus, modals */
+.glass,
+.card-bg,
+.bg-zinc-950,
+.bg-zinc-900,
+.bg-zinc-850,
+.bg-zinc-800,
+.bg-zinc-750,
+.bg-neutral-950,
+.bg-neutral-900,
+.bg-neutral-850,
+.bg-neutral-800,
+.bg-gray-950,
+.bg-gray-900,
+.bg-gray-850,
+.bg-gray-800,
+.bg-slate-950,
+.bg-slate-900,
+.bg-slate-850,
+.bg-slate-800,
+[class*="bg-zinc-"],
+[class*="bg-neutral-"],
+[class*="bg-gray-"],
+[class*="bg-slate-"],
+[class*="bg-[#000000]"],
+[class*="bg-[#050505]"],
+[class*="bg-[#0A0A0A]"],
+[class*="bg-[#0a0a0a]"],
+[class*="bg-[#111111]"],
+[class*="bg-[#111118]"],
+[class*="bg-[#111218]"],
+[class*="bg-[#28282F]"],
+[class*="bg-[#16171d]"],
+[class*="bg-[#16171e]"],
+[class*="bg-[#161922]"],
+[class*="bg-[#1A1D23]"],
+[class*="bg-[#0d0d0d]"],
+[class*="bg-[#1a1b24]"],
+[class*="bg-[#20212e]"],
+[class*="bg-[#1f202d]"],
+[class*="bg-[#020203]"],
+[class*="bg-[#010102]"],
+[class*="bg-[#161616]"],
+[class*="bg-[#13141b]"],
+[class*="bg-[#0a0b10]"],
+[class*="bg-[#13141f]"],
+[class*="bg-[#1a1b2d]"],
+[class*="bg-[#13141c]"],
+[class*="bg-[#161720]"],
+[class*="bg-[#05060b]"],
+[class*="bg-[#121319]"],
+[class*="bg-[#18121f]"],
+[class*="bg-[#162130]"],
+[class*="bg-[#1a1c3d]"],
+[class*="bg-[#05060c]"],
+[class*="bg-[#090a10]"],
+[class*="bg-[#0c0d12]"],
+[class*="bg-[#121318]"] {
+  background-color: var(--card-bg) !important;
+  background-image: none !important;
+}
+
+/* Hover active overrides */
+.hover\:bg-[#111111]\/50:hover,
+.hover\:bg-zinc-900:hover,
+.hover\:bg-zinc-800:hover,
+.hover\:bg-neutral-800:hover,
+.group:hover .group-hover\:bg-zinc-800,
+[class*="hover:bg-white/"]:hover,
+[class*="hover:bg-[#111111]"]:hover,
+[class*="hover:bg-zinc-850"]:hover {
+  background-color: var(--card-hover) !important;
+}
+
+/* Active navigation sidebar indicators */
+button.bg-\[\#111111\].text-white,
+.bg-\[\#111111\].text-white {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+  font-weight: 600 !important;
+}
+
+/* Modals overlays & drawer backdrop overlays style correction */
+.absolute.inset-0.bg-black\/35,
+.bg-\[\#000000\]\/80,
+.bg-black\/75 {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   TEXT METADATA AND ICONS OVERRIDES
+   -------------------------------------------------------------------------- */
+
+/* Map standard light texts to theme text-primary on both light/dark */
+.text-zinc-100,
+.text-zinc-200,
+.text-zinc-300,
+.text-zinc-350,
+.text-gray-100,
+.text-gray-200,
+.text-neutral-100,
+.text-slate-100,
+.text-\[\#E3E2E0\],
+.text-[#E3E2E0] {
+  color: var(--text-primary) !important;
+}
+
+/* Target h1-h6 and normal texts recursively to ensure they match primary color */
+h1, h2, h3, h4, h5, h6, th, td, label {
+  color: var(--text-primary) !important;
+}
+
+/* Exclude colored labels and buttons from being forced to dark/light colors */
+.text-white:not(
+  button, button *, 
+  a.bg-\[\#6D5FFC\], a.bg-\[\#7C5CFF\],
+  .bg-\[\#6D5FFC\] *, .bg-\[\#6D5FFC\], 
+  .bg-\[\#7C5CFF\] *, .bg-\[\#7C5CFF\], 
+  .bg-\[\#6D5FFC\]\/20 *, .bg-\[\#7C5CFF\]\/20 *,
+  .bg-indigo-600 *, .bg-indigo-500 *, 
+  .bg-emerald-500 *, .bg-emerald-600 *, 
+  .bg-green-500 *, .bg-red-500 *, 
+  .bg-rose-500 *,
+  [class*="bg-indigo-"] *, [class*="bg-emerald-"] *, 
+  [class*="bg-red-"] *, [class*="bg-rose-"] *, 
+  [class*="bg-green-"] *, [class*="bg-[#6D5FFC]"] *, 
+  [class*="bg-[#7C5CFF]"] *
+) {
+  color: var(--text-primary) !important;
+}
+
+/* Map standard text states to theme secondary (muted descriptions/metadata) */
+.text-zinc-300,
+.text-zinc-400,
+.text-zinc-500,
+.text-zinc-600,
+.text-gray-300,
+.text-gray-400,
+.text-gray-500,
+.text-gray-600,
+.text-gray-650,
+.text-neutral-350,
+.text-neutral-400,
+.text-neutral-500,
+.text-neutral-600,
+.text-slate-300,
+.text-slate-400,
+.text-slate-500,
+.text-slate-600,
+.text-[gray-650],
+.text-zinc-500\/80,
+.text-\[\#A1A1AA\],
+.text-[#A1A1AA] {
+  color: var(--text-secondary) !important;
+}
+
+/* --------------------------------------------------------------------------
+   EXPLICIT LIGHT MODE AND VISUAL CONTRAST SYSTEM FOR LIFEOS
+   -------------------------------------------------------------------------- */
+
+html:not(.dark) p,
+html:not(.dark) span,
+html:not(.dark) h1,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4,
+html:not(.dark) h5,
+html:not(.dark) h6,
+html:not(.dark) label,
+html:not(.dark) td,
+html:not(.dark) th {
+  opacity: 1 !important;
+}
+
+/* Clean transparent grey background wrappers in Light Mode */
+html:not(.dark) .bg-white\/5 {
+  background-color: #F8F8FA !important;
+}
+
+html:not(.dark) .border-white\/5 {
+  border-color: #E5E7EB !important;
+}
+
+/* Force all routine item rows, task quadrant blocks, and checkbox overlays to pure white theme objects */
+html:not(.dark) #routine_left_timeline .space-y-1\.5 > div,
+html:not(.dark) #routine_main_layout [onClick^="() => handleToggleEvent"],
+html:not(.dark) #routine_main_layout [onClick^="() => handleToggleTask"],
+html:not(.dark) #dashboard_quadrants .group,
+html:not(.dark) #dashboard_quadrants [className*="bg-black/"],
+html:not(.dark) #dashboard_quadrants [class*="bg-black/"],
+html:not(.dark) [class*="bg-black/"],
+html:not(.dark) [class*="bg-[#111111]/"],
+html:not(.dark) .bg-black\/45,
+html:not(.dark) .bg-[#111111]\/10,
+html:not(.dark) .bg-black\/30,
+html:not(.dark) .bg-black\/40,
+html:not(.dark) .bg-\[\#111111\]\/10,
+html:not(.dark) #dashboard_quadrants p {
+  background-color: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+  color: #000000 !important;
+}
+
+/* Sub-contents of cards in Light Mode should be black for max contrast */
+html:not(.dark) #routine_left_timeline .space-y-1\.5 > div *,
+html:not(.dark) #routine_main_layout [onClick^="() => handleToggleEvent"] *,
+html:not(.dark) #routine_main_layout [onClick^="() => handleToggleTask"] *,
+html:not(.dark) #dashboard_quadrants .group * {
+  color: #000000 !important;
+}
+
+/* Preserve the violet accent colors for time slots, select borders, icons, and checkboxes */
+html:not(.dark) #routine_left_timeline .space-y-1\.5 > div span.text-\[\#7C5CFF\],
+html:not(.dark) #routine_left_timeline .space-y-1\.5 > div span[class*="text-[#7C5CFF]"],
+html:not(.dark) #routine_left_timeline .space-y-1\.5 > div svg,
+html:not(.dark) #routine_left_timeline .space-y-1\.5 > div p span[class*="text-[#7C5CFF]"],
+html:not(.dark) [class*="border-[#7C5CFF]"],
+html:not(.dark) [class*="text-[#7C5CFF]"] {
+  color: #7C5CFF !important;
+}
+
+/* Align inputs and dropdown lists in Light Mode to white background with high contrast labels */
+html:not(.dark) input,
+html:not(.dark) select,
+html:not(.dark) textarea,
+html:not(.dark) .bg-[#0A0A0A],
+html:not(.dark) [class*="bg-[#0A0A0A]"] {
+  background-color: #FFFFFF !important;
+  color: #000000 !important;
+  border-color: #E5E7EB !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder,
+html:not(.dark) select::placeholder {
+  color: #777777 !important;
+  opacity: 1 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   BORDER AND DIVIDER COLOR OVERRIDES
+   -------------------------------------------------------------------------- */
+
+.border,
+.border-b,
+.border-r,
+.border-t,
+.border-l,
+.border-\[\#1A1A1A\],
+.border-[#1A1A1A],
+.border-white\/5,
+.border-white\/10,
+.border-[#E5E7EB],
+.border-zinc-800,
+.border-zinc-900,
+.border-neutral-800,
+.border-neutral-850,
+.border-gray-800,
+[class*="border-[#1A1A1A]"],
+[class*="border-[#E5E7EB]"],
+[class*="border-neutral-800"],
+[class*="border-gray-800"],
+[class*="border-white/5"],
+[class*="border-white/10"],
+[class*="border-white/20"],
+[class*="border-[#28282F]"],
+[class*="border-[#7C5CFF]"] {
+  border-color: var(--border-color) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   FORMS, INPUTS, DROPDOWNS AND TEXTAREAS 
+   -------------------------------------------------------------------------- */
+
+input,
+textarea,
+select {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+select::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.7 !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   SPECIALIZED WIDGETS AND CHIPS OVERRIDES
+   -------------------------------------------------------------------------- */
+
+/* Progress bars, track lines and range slider tracks */
+.progress-bar-track,
+.bg-zinc-800\/50,
+.bg-[#1A1A1A],
+[class*="bg-[#1A1A1A]"],
+.bg-neutral-800\/50 {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* Cards Dropshadow adjustments based on active theme mode */
+html:not(.dark) .glass,
+html:not(.dark) [class*="bg-[#111111]"],
+html:not(.dark) [class*="bg-[#020203]"],
+html:not(.dark) [class*="bg-[#010102]"],
+html:not(.dark) [class*="bg-[#050505]"],
+html:not(.dark) [class*="bg-[#16171d]"],
+html:not(.dark) [class*="bg-zinc-900"],
+html:not(.dark) [class*="bg-[#1a1b24]"] {
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05) !important;
+}
+
+.dark .glass,
+.dark [class*="bg-[#111111]"],
+.dark [class*="bg-[#020203]"],
+.dark [class*="bg-[#010102]"],
+.dark [class*="bg-[#050505]"],
+.dark [class*="bg-[#16171d]"],
+.dark [class*="bg-zinc-900"],
+.dark [class*="bg-[#1a1b24]"] {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   SMOOTH TRANSITIONS ENGINE
+   -------------------------------------------------------------------------- */
+
+body, 
+div, 
+button, 
+span, 
+p, 
+h1, h2, h3, h4, h5, h6, 
+section, 
+header, 
+aside, 
+footer, 
+input, 
+select, 
+textarea, 
+label,
+th,
+td,
+a,
+svg {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease !important;
+}
+
+
